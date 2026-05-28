@@ -114,7 +114,7 @@ public class UserModel {
     // ================= SWIPE / MATCH =================
  
     public void swipe(int userId, int targetId, boolean interest) {
-        String sql = "INSERT OR IGNORE INTO swipes (user_id, target_id, interest) VALUES (?,?,?)";
+        String sql = "INSERT IGNORE INTO swipes (user_id, target_id, interest) VALUES (?,?,?)";
         try (PreparedStatement ps = Connection.getInstance().prepareStatement(sql)) {
             ps.setInt(1, userId);
             ps.setInt(2, targetId);
