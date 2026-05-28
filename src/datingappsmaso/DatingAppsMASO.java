@@ -4,6 +4,8 @@
  */
 package datingappsmaso;
 
+import javax.swing.SwingUtilities;
+import view.LoginView;
 /**
  *
  * @author sabri
@@ -15,6 +17,10 @@ public class DatingAppsMASO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        database.Connection.getInstance();
+        
+        SwingUtilities.invokeLater(() -> {
+            new LoginView().setVisible(true);
+        });
     }
-    
 }
