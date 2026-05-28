@@ -162,10 +162,10 @@ public class HomeView extends JFrame {
         navPanel.add(btnChat);
         navPanel.add(btnProfil);
  
-        JPanel centerPanel = new JPanel(new BorderLayout());
+        JPanel centerPanel = new JPanel(new CardLayout());
         centerPanel.setBackground(bg);
-        centerPanel.add(cardPanel, BorderLayout.CENTER);
-        centerPanel.add(lblNoProfile, BorderLayout.CENTER);
+        centerPanel.add(cardPanel, "CARD");
+        centerPanel.add(lblNoProfile, "NOPROFILE");
  
         JPanel scrollWrapper = new JPanel(new BorderLayout());
         scrollWrapper.setBackground(bg);
@@ -186,10 +186,11 @@ public class HomeView extends JFrame {
     }
  
     public void showCard(User user) {
-        lblNoProfile.setVisible(false);
-        cardPanel.setVisible(true);
+        CardLayout cl = (CardLayout) cardPanel.getParent().getLayout();
+        cl.show(cardPanel.getParent(), "CARD");
+
         int skor = currentUser.hitungKecocokan(user);
- 
+
         lblFoto.setText(user.getKelamin().equals("Perempuan") ? "👩" : "👨");
         lblSkorCocok.setText("🎯 " + skor + " kriteria cocok");
         lblNama.setText(user.getNama());
@@ -198,17 +199,19 @@ public class HomeView extends JFrame {
         lblDomisili.setText("📍 " + user.getDomisili());
         lblTujuan.setText("🎯 Looking for: " + user.getTujuan());
         lblHobi.setText("✨ " + user.getHobiString());
- 
+
         String desc = user.getDeskripsi();
         if (desc != null && desc.length() > 100) desc = desc.substring(0, 100) + "...";
         lblDeskripsi.setText("<html><i>" + (desc != null ? desc : "") + "</i></html>");
+
         cardPanel.revalidate();
         cardPanel.repaint();
     }
  
     public void showNoProfile() {
-        cardPanel.setVisible(false);
-        lblNoProfile.setVisible(true);
+        CardLayout cl = (CardLayout) cardPanel.getParent().getLayout();
+        cl.show(cardPanel.getParent(), "NOPROFILE");
+
         btnInterest.setEnabled(false);
         btnNotInterest.setEnabled(false);
     }

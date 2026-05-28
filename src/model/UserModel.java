@@ -84,7 +84,7 @@ public class UserModel {
         for (User u : semua) {
             if (u.getId() == currentUser.getId()) continue;
             if (sudahDiSwipe(currentUser.getId(), u.getId())) continue;
-            if (currentUser.hitungKecocokan(u) >= 3) hasil.add(u);
+            hasil.add(u);
         }
         // Sort by score descending
         hasil.sort((a, b) -> b.hitungKecocokan(currentUser) - a.hitungKecocokan(currentUser));
