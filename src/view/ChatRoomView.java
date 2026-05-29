@@ -54,7 +54,7 @@ public class ChatRoomView extends JFrame {
         topBar.setBorder(new EmptyBorder(10, 16, 10, 16));
  
         btnBack = new JButton("‹ Kembali");
-        btnBack.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btnBack.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         btnBack.setForeground(accent);
         btnBack.setBackground(topBg);
         btnBack.setBorderPainted(false);
@@ -62,22 +62,59 @@ public class ChatRoomView extends JFrame {
         btnBack.setContentAreaFilled(false);
         btnBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnBack.addActionListener(e -> dispose());
+        
+        JButton btnBlock = new JButton("Block");
+        btnBlock.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
+        btnBlock.setForeground(new Color(255, 80, 80));
+        btnBlock.setBorder(null);
+        btnBlock.setContentAreaFilled(false);
+        btnBlock.setFocusPainted(false);
+        btnBlock.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        btnBlock.addActionListener(e -> {
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Yakin ingin memblokir " + otherUser.getNama() + "?",
+            "Konfirmasi Block",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            userModel.blockUser(
+                currentUser.getId(),
+                otherUser.getId()
+            );
+
+            JOptionPane.showMessageDialog(
+                this,
+                otherUser.getNama() + " berhasil diblokir."
+            );
+
+            dispose();
+            
+            new ChatListView(
+                currentUser,
+                userModel.getMatches(currentUser.getId()),
+                user -> new ChatRoomView(currentUser, user).setVisible(true)
+            ).setVisible(true);
+        }
+    });
  
         JPanel userInfo = new JPanel(new BorderLayout());
         userInfo.setBackground(topBg);
  
         JLabel avatar = new JLabel(otherUser.getKelamin().equals("Perempuan") ? "👩" : "👨");
-        avatar.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        avatar.setFont(new Font("Arial Unicode MS", Font.PLAIN, 24));
         avatar.setBorder(new EmptyBorder(0, 10, 0, 10));
  
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.Y_AXIS));
         namePanel.setBackground(topBg);
         JLabel name = new JLabel(otherUser.getNama());
-        name.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        name.setFont(new Font("Arial Unicode MS", Font.BOLD, 14));
         name.setForeground(Color.WHITE);
         JLabel statusLabel = new JLabel(otherUser.getDomisili() + " • " + otherUser.getUmur() + " thn");
-        statusLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        statusLabel.setFont(new Font("Arial Unicode MS", Font.PLAIN, 11));
         statusLabel.setForeground(new Color(140, 140, 170));
         namePanel.add(name);
         namePanel.add(statusLabel);
@@ -87,6 +124,7 @@ public class ChatRoomView extends JFrame {
  
         topBar.add(btnBack, BorderLayout.WEST);
         topBar.add(userInfo, BorderLayout.CENTER);
+        topBar.add(btnBlock, BorderLayout.EAST);
  
         // Messages area
         messagesPanel = new JPanel();
@@ -108,7 +146,7 @@ public class ChatRoomView extends JFrame {
         ));
  
         txtPesan = new JTextField();
-        txtPesan.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txtPesan.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         txtPesan.setForeground(Color.WHITE);
         txtPesan.setBackground(new Color(40, 40, 60));
         txtPesan.setCaretColor(Color.WHITE);
@@ -128,7 +166,7 @@ public class ChatRoomView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        btnKirim.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnKirim.setFont(new Font("Arial Unicode MS", Font.BOLD, 16));
         btnKirim.setForeground(Color.WHITE);
         btnKirim.setOpaque(false);
         btnKirim.setContentAreaFilled(false);
@@ -156,7 +194,7 @@ public class ChatRoomView extends JFrame {
  
         if (messages.isEmpty()) {
             JLabel empty = new JLabel("<html><center>👋<br>Mulai percakapan dengan " + otherUser.getNama() + "!</center></html>");
-            empty.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            empty.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
             empty.setForeground(new Color(140, 140, 170));
             empty.setHorizontalAlignment(SwingConstants.CENTER);
             empty.setAlignmentX(CENTER_ALIGNMENT);
@@ -166,7 +204,7 @@ public class ChatRoomView extends JFrame {
             for (ChatMessage msg : messages) {
                 boolean isMe = msg.getSenderId() == currentUser.getId();
                 messagesPanel.add(makeBubble(msg.getPesan(), msg.getWaktuFormatted(), isMe));
-                messagesPanel.add(Box.createVerticalStrut(4));
+                messagesPanel.add(Box.createVerticalStrut(2));
             }
         }
  
@@ -188,11 +226,12 @@ public class ChatRoomView extends JFrame {
     }
  
     private JPanel makeBubble(String text, String time, boolean isMe) {
-        JPanel wrapper = new JPanel(new FlowLayout(isMe ? FlowLayout.RIGHT : FlowLayout.LEFT));
+        JPanel wrapper = new JPanel(new FlowLayout(
+            isMe ? FlowLayout.RIGHT : FlowLayout.LEFT, 0, 0
+        ));
         wrapper.setBackground(new Color(18, 18, 30));
-        wrapper.setBorder(new EmptyBorder(2, 10, 2, 10));
-        wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, 9999));
- 
+        wrapper.setBorder(new EmptyBorder(2, 12, 2, 12));
+
         JPanel bubble = new JPanel() {
             @Override protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -203,24 +242,39 @@ public class ChatRoomView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        bubble.setLayout(new BoxLayout(bubble, BoxLayout.Y_AXIS));
+
+        bubble.setLayout(new BorderLayout());
         bubble.setOpaque(false);
-        bubble.setBorder(new EmptyBorder(10, 14, 10, 14));
- 
-        JLabel txtLabel = new JLabel("<html><p style='width:180px'>" + text + "</p></html>");
-        txtLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        bubble.setBorder(new EmptyBorder(10, 14, 8, 14));
+
+        JLabel txtLabel = new JLabel(text);
+        txtLabel.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         txtLabel.setForeground(Color.WHITE);
- 
+
         JLabel timeLabel = new JLabel(time);
-        timeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 10));
-        timeLabel.setForeground(new Color(255, 255, 255, 140));
-        timeLabel.setAlignmentX(isMe ? RIGHT_ALIGNMENT : LEFT_ALIGNMENT);
- 
-        bubble.add(txtLabel);
-        bubble.add(Box.createVerticalStrut(3));
-        bubble.add(timeLabel);
- 
+        timeLabel.setFont(new Font("Arial Unicode MS", Font.PLAIN, 10));
+        timeLabel.setForeground(new Color(255, 255, 255, 150));
+
+        JPanel content = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
+        content.setOpaque(false);
+        content.add(txtLabel);
+        content.add(timeLabel);
+
+        bubble.add(content, BorderLayout.CENTER);
+
+        int textWidth = txtLabel.getPreferredSize().width;
+        int timeWidth = timeLabel.getPreferredSize().width;
+
+        int bubbleWidth = Math.min(textWidth + timeWidth + 55, 280);
+        int bubbleHeight = content.getPreferredSize().height + 22;
+
+        bubble.setPreferredSize(new Dimension(bubbleWidth, bubbleHeight));
+
+        bubble.setPreferredSize(new Dimension(bubbleWidth, bubbleHeight));
+
         wrapper.add(bubble);
+        wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, wrapper.getPreferredSize().height));
+
         return wrapper;
     }
 }

@@ -28,7 +28,7 @@ public class LoginView extends JFrame {
     private void initComponents() {
         setTitle("MASO - Match Soulmate Online");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(420, 560);
+        setSize(420, 720);
         setLocationRelativeTo(null);
         setResizable(false);
  
@@ -41,12 +41,12 @@ public class LoginView extends JFrame {
         headerPanel.setBorder(new EmptyBorder(40, 30, 20, 30));
  
         JLabel lblLogo = new JLabel("💘 MASO");
-        lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        lblLogo.setFont(new Font("Arial Unicode MS", Font.BOLD, 32));
         lblLogo.setForeground(new Color(255, 90, 130));
         lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
  
         JLabel lblTagline = new JLabel("Match Soulmate Online");
-        lblTagline.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblTagline.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         lblTagline.setForeground(new Color(160, 160, 190));
         lblTagline.setHorizontalAlignment(SwingConstants.CENTER);
  
@@ -62,35 +62,37 @@ public class LoginView extends JFrame {
         formPanel.setBackground(new Color(28, 28, 45));
         formPanel.setBorder(new CompoundBorder(
             new LineBorder(new Color(255, 90, 130, 60), 1, true),
-            new EmptyBorder(30, 30, 30, 30)
+            new EmptyBorder(40, 35, 40, 35)
         ));
  
         JLabel lblTitle = new JLabel("Masuk ke Akun");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setFont(new Font("Arial Unicode MS", Font.BOLD, 20));
         lblTitle.setForeground(Color.WHITE);
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
  
         JLabel lblSub = new JLabel("Temukan pasangan jiwa kamu");
-        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblSub.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         lblSub.setForeground(new Color(140, 140, 170));
         lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
  
         JLabel lblUser = new JLabel("Username");
-        lblUser.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblUser.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         lblUser.setForeground(new Color(200, 200, 220));
+        lblUser.setAlignmentX(Component.CENTER_ALIGNMENT);
  
         txtUsername = createTextField("Masukkan username...");
  
         JLabel lblPass = new JLabel("Password");
-        lblPass.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblPass.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         lblPass.setForeground(new Color(200, 200, 220));
+        lblPass.setAlignmentX(Component.CENTER_ALIGNMENT);
  
         txtPassword = new JPasswordField();
         styleField(txtPassword);
         txtPassword.setToolTipText("Masukkan password");
  
         lblError = new JLabel(" ");
-        lblError.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblError.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         lblError.setForeground(new Color(255, 80, 80));
         lblError.setAlignmentX(Component.CENTER_ALIGNMENT);
  
@@ -117,7 +119,7 @@ public class LoginView extends JFrame {
  
         JPanel centerWrapper = new JPanel(new BorderLayout());
         centerWrapper.setBackground(new Color(18, 18, 30));
-        centerWrapper.setBorder(new EmptyBorder(0, 30, 40, 30));
+        centerWrapper.setBorder(new EmptyBorder(10, 30, 70, 30));
         centerWrapper.add(formPanel, BorderLayout.CENTER);
  
         mainPanel.add(headerPanel, BorderLayout.NORTH);
@@ -142,7 +144,7 @@ public class LoginView extends JFrame {
     }
  
     private void styleField(JTextField f) {
-        f.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        f.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         f.setForeground(Color.WHITE);
         f.setBackground(new Color(40, 40, 62));
         f.setCaretColor(Color.WHITE);
@@ -150,7 +152,9 @@ public class LoginView extends JFrame {
             new LineBorder(new Color(80, 80, 120), 1, true),
             new EmptyBorder(10, 14, 10, 14)
         ));
-        f.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+        f.setMaximumSize(new Dimension(355, 48));
+        f.setPreferredSize(new Dimension(355, 48));
+        f.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
  
     private JButton createPrimaryButton(String text) {
@@ -166,27 +170,29 @@ public class LoginView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setFont(new Font("Arial Unicode MS", Font.BOLD, 14));
         btn.setForeground(Color.WHITE);
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
         btn.setFocusPainted(false);
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
+        btn.setMaximumSize(new Dimension(355, 48));
+        btn.setPreferredSize(new Dimension(355, 48));
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
         return btn;
     }
  
     private JButton createSecondaryButton(String text) {
         JButton btn = new JButton(text);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btn.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         btn.setForeground(new Color(255, 90, 130));
         btn.setBackground(new Color(28, 28, 45));
         btn.setBorder(new LineBorder(new Color(255, 90, 130, 80), 1, true));
         btn.setFocusPainted(false);
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        btn.setMaximumSize(new Dimension(355, 48));
+        btn.setPreferredSize(new Dimension(355, 48));
         btn.setAlignmentX(Component.CENTER_ALIGNMENT);
         return btn;
     }

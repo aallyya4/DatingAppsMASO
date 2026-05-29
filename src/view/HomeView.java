@@ -51,10 +51,10 @@ public class HomeView extends JFrame {
         topBar.setBackground(new Color(24, 24, 40));
         topBar.setBorder(new EmptyBorder(12, 20, 12, 20));
         JLabel lblAppName = new JLabel("💘 MASO");
-        lblAppName.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblAppName.setFont(new Font("Arial Unicode MS", Font.BOLD, 18));
         lblAppName.setForeground(accent);
         JLabel lblGreet = new JLabel("Hai, " + currentUser.getNama().split(" ")[0] + "!");
-        lblGreet.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblGreet.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         lblGreet.setForeground(new Color(180, 180, 200));
         topBar.add(lblAppName, BorderLayout.WEST);
         topBar.add(lblGreet, BorderLayout.EAST);
@@ -78,7 +78,7 @@ public class HomeView extends JFrame {
                 g2.setPaint(gp);
                 g2.fillRect(0, 0, getWidth(), getHeight());
                 g2.setColor(new Color(255, 255, 255, 40));
-                g2.setFont(new Font("Segoe UI", Font.PLAIN, 60));
+                g2.setFont(new Font("Arial Unicode MS", Font.PLAIN, 60));
                 FontMetrics fm = g2.getFontMetrics();
                 String icon = getText();
                 g2.drawString(icon, (getWidth() - fm.stringWidth(icon)) / 2, getHeight() / 2 + fm.getAscent() / 2 - 10);
@@ -97,7 +97,7 @@ public class HomeView extends JFrame {
         infoPanel.setBorder(new EmptyBorder(16, 20, 16, 20));
  
         lblSkorCocok = new JLabel();
-        lblSkorCocok.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        lblSkorCocok.setFont(new Font("Arial Unicode MS", Font.BOLD, 11));
         lblSkorCocok.setForeground(new Color(255, 180, 100));
         lblSkorCocok.setAlignmentX(LEFT_ALIGNMENT);
  
@@ -108,7 +108,7 @@ public class HomeView extends JFrame {
         lblTujuan = makeInfoLabel("", 13, Font.PLAIN, new Color(170, 170, 200));
         lblHobi = makeInfoLabel("", 13, Font.PLAIN, new Color(255, 180, 200));
         lblDeskripsi = new JLabel();
-        lblDeskripsi.setFont(new Font("Segoe UI", Font.ITALIC, 13));
+        lblDeskripsi.setFont(new Font("Arial Unicode MS", Font.ITALIC, 13));
         lblDeskripsi.setForeground(new Color(190, 190, 210));
         lblDeskripsi.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
         lblDeskripsi.setBorder(new CompoundBorder(
@@ -132,8 +132,9 @@ public class HomeView extends JFrame {
         cardPanel.add(lblFoto);
         cardPanel.add(infoPanel);
  
-        lblNoProfile = new JLabel("<html><center>😔<br><br>Tidak ada rekomendasi profil<br><small>Tidak ada user dengan ≥3 kriteria cocok<br>yang belum kamu swipe</small></center></html>");
-        lblNoProfile.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblNoProfile = new JLabel("<html><center>😔<br><br>Tidak ada rekomendasi profil<br><small>Tidak ada user dengan hobi yang sama<br>atau semua sudah kamu swipe</small></center></html>");
+        
+        lblNoProfile.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         lblNoProfile.setForeground(new Color(160, 160, 180));
         lblNoProfile.setHorizontalAlignment(SwingConstants.CENTER);
         lblNoProfile.setVisible(false);
@@ -218,7 +219,7 @@ public class HomeView extends JFrame {
  
     private JLabel makeInfoLabel(String text, int size, int style, Color color) {
         JLabel l = new JLabel(text);
-        l.setFont(new Font("Segoe UI", style, size));
+        l.setFont(new Font("Arial Unicode MS", style, size));
         l.setForeground(color);
         l.setAlignmentX(LEFT_ALIGNMENT);
         return l;
@@ -235,7 +236,7 @@ public class HomeView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setFont(new Font("Arial Unicode MS", Font.BOLD, 14));
         btn.setForeground(Color.WHITE);
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
@@ -248,7 +249,7 @@ public class HomeView extends JFrame {
  
     private JButton makeNavButton(String text, boolean active) {
         JButton btn = new JButton(text);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btn.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         btn.setForeground(active ? new Color(255, 90, 130) : new Color(140, 140, 170));
         btn.setBackground(new Color(24, 24, 40));
         btn.setBorderPainted(false);

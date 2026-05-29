@@ -56,11 +56,11 @@ public class RegisterView extends JFrame {
         header.setBorder(new EmptyBorder(25, 0, 10, 0));
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         JLabel logo = new JLabel("💘 MASO");
-        logo.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        logo.setFont(new Font("Arial Unicode MS", Font.BOLD, 26));
         logo.setForeground(accent);
         logo.setAlignmentX(CENTER_ALIGNMENT);
         JLabel sub = new JLabel("Buat akun baru & temukan soulmate-mu");
-        sub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        sub.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         sub.setForeground(subText);
         sub.setAlignmentX(CENTER_ALIGNMENT);
         header.add(logo);
@@ -136,7 +136,7 @@ public class RegisterView extends JFrame {
         listHobi.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listHobi.setBackground(new Color(40, 40, 62));
         listHobi.setForeground(textColor);
-        listHobi.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        listHobi.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         listHobi.setFixedCellHeight(28);
         listHobi.setSelectionBackground(new Color(255, 90, 130, 180));
         listHobi.setSelectionForeground(Color.WHITE);
@@ -153,7 +153,7 @@ public class RegisterView extends JFrame {
         c.gridy = row++;
         lblError = new JLabel(" ");
         lblError.setForeground(new Color(255, 80, 80));
-        lblError.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblError.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         lblError.setHorizontalAlignment(SwingConstants.CENTER);
         form.add(lblError, c);
  
@@ -196,14 +196,14 @@ public class RegisterView extends JFrame {
     // ============ Style Helpers ============
     private JLabel makeLabel(String text, Color color) {
         JLabel l = new JLabel(text);
-        l.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        l.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         l.setForeground(color);
         return l;
     }
  
     private JTextField makeTextField() {
         JTextField f = new JTextField();
-        f.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        f.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         f.setForeground(Color.WHITE);
         f.setBackground(new Color(40, 40, 62));
         f.setCaretColor(Color.WHITE);
@@ -216,7 +216,7 @@ public class RegisterView extends JFrame {
  
     private JPasswordField makePassField() {
         JPasswordField f = new JPasswordField();
-        f.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        f.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         f.setForeground(Color.WHITE);
         f.setBackground(new Color(40, 40, 62));
         f.setCaretColor(Color.WHITE);
@@ -228,7 +228,7 @@ public class RegisterView extends JFrame {
     }
  
     private void styleCombo(JComboBox<String> cb) {
-        cb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cb.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         cb.setBackground(new Color(40, 40, 62));
         cb.setForeground(Color.WHITE);
     }
@@ -245,7 +245,7 @@ public class RegisterView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setFont(new Font("Arial Unicode MS", Font.BOLD, 14));
         btn.setForeground(Color.WHITE);
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
@@ -258,7 +258,7 @@ public class RegisterView extends JFrame {
  
     private JButton makeSecondaryButton(String text, Color accent, Color bg) {
         JButton btn = new JButton(text);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btn.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         btn.setForeground(accent);
         btn.setBackground(bg);
         btn.setBorder(new LineBorder(new Color(255, 90, 130, 80), 1, true));

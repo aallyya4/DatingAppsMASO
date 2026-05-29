@@ -83,13 +83,23 @@ public class UserModel {
     public List<User> getRekomendasi(User currentUser) {
         List<User> semua = getAllUsers();
         List<User> hasil = new ArrayList<>();
+
         for (User u : semua) {
             if (u.getId() == currentUser.getId()) continue;
+            if (isBlocked(currentUser.getId(), u.getId())) continue;
             if (sudahDiSwipe(currentUser.getId(), u.getId())) continue;
-            hasil.add(u);
+
+            int cocokHobi = currentUser.hitungKecocokanHobi(u);
+
+            if (cocokHobi > 0) {
+                hasil.add(u);
+            }
         }
-        // Sort by score descending
-        hasil.sort((a, b) -> b.hitungKecocokan(currentUser) - a.hitungKecocokan(currentUser));
+
+        hasil.sort((a, b) ->
+            b.hitungKecocokanHobi(currentUser) - a.hitungKecocokanHobi(currentUser)
+        );
+
         return hasil;
     }
  
@@ -213,6 +223,50 @@ public class UserModel {
         } catch (SQLException e) { e.printStackTrace(); }
         return list;
     }
+    
+    public void blockUser(int blockerId, int blockedId) {
+        String sqlBlock = "INSERT IGNORE INTO blocks (blocker_id, blocked_id) VALUES (?,?)";
+
+        String sqlDeleteMatch = "DELETE FROM matches "
+                + "WHERE (user1_id=? AND user2_id=?) "
+                + "OR (user1_id=? AND user2_id=?)";
+
+        try {
+            PreparedStatement psBlock = Connection.getInstance().prepareStatement(sqlBlock);
+            psBlock.setInt(1, blockerId);
+            psBlock.setInt(2, blockedId);
+            psBlock.executeUpdate();
+
+            PreparedStatement psDelete = Connection.getInstance().prepareStatement(sqlDeleteMatch);
+            psDelete.setInt(1, blockerId);
+            psDelete.setInt(2, blockedId);
+            psDelete.setInt(3, blockedId);
+            psDelete.setInt(4, blockerId);
+            psDelete.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean isBlocked(int userId, int targetId) {
+        String sql = "SELECT id FROM blocks "
+                + "WHERE (blocker_id=? AND blocked_id=?) "
+                + "OR (blocker_id=? AND blocked_id=?)";
+
+        try (PreparedStatement ps = Connection.getInstance().prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, targetId);
+            ps.setInt(3, targetId);
+            ps.setInt(4, userId);
+
+            return ps.executeQuery().next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
  
     // ================= HELPER =================
  
@@ -238,3 +292,5 @@ public class UserModel {
         return u;
     }
 }
+
+    // ================= DELETE/BLOCK =================

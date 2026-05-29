@@ -100,7 +100,22 @@ public class User {
         }
         return skor;
     }
- 
+    
+    public int hitungKecocokanHobi(User other) {
+        int skor = 0;
+
+        for (String h : this.hobi) {
+            for (String oh : other.hobi) {
+                if (h.trim().equalsIgnoreCase(oh.trim())) {
+                    skor++;
+                    break;
+                }
+            }
+        }
+
+        return skor;
+    }
+
     public String getHobiString() {
         return String.join(", ", hobi);
     }

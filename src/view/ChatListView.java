@@ -43,13 +43,13 @@ public class ChatListView extends JFrame {
         topBar.setBackground(new Color(24, 24, 40));
         topBar.setBorder(new EmptyBorder(14, 20, 14, 20));
         JLabel title = new JLabel("💬 Pesan");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        title.setFont(new Font("Arial Unicode MS", Font.BOLD, 18));
         title.setForeground(accent);
         topBar.add(title, BorderLayout.WEST);
  
         // Match count badge
         JLabel badge = new JLabel(matches.size() + " match");
-        badge.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        badge.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         badge.setForeground(new Color(255, 180, 100));
         topBar.add(badge, BorderLayout.EAST);
  
@@ -60,7 +60,7 @@ public class ChatListView extends JFrame {
  
         if (matches.isEmpty()) {
             JLabel empty = new JLabel("<html><center>💔<br><br>Belum ada match<br><small>Swipe dan saling 'Suka!' untuk memulai chat</small></center></html>");
-            empty.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            empty.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
             empty.setForeground(new Color(140, 140, 170));
             empty.setHorizontalAlignment(SwingConstants.CENTER);
             empty.setBorder(new EmptyBorder(80, 30, 0, 30));
@@ -73,6 +73,8 @@ public class ChatListView extends JFrame {
         }
  
         JScrollPane scroll = new JScrollPane(listPanel);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setBackground(bg);
         scroll.setBorder(null);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
@@ -102,7 +104,7 @@ public class ChatListView extends JFrame {
         item.setBackground(new Color(18, 18, 30));
         item.setBorder(new EmptyBorder(14, 20, 14, 20));
         item.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        item.setMaximumSize(new Dimension(Integer.MAX_VALUE, 76));
+        item.setMaximumSize(new Dimension(Integer.MAX_VALUE, 85));
  
         // Avatar
         JLabel avatar = new JLabel(match.getKelamin().equals("Perempuan") ? "👩" : "👨") {
@@ -115,7 +117,7 @@ public class ChatListView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        avatar.setFont(new Font("Segoe UI", Font.PLAIN, 26));
+        avatar.setFont(new Font("Arial Unicode MS", Font.PLAIN, 26));
         avatar.setHorizontalAlignment(SwingConstants.CENTER);
         avatar.setPreferredSize(new Dimension(52, 52));
  
@@ -126,16 +128,17 @@ public class ChatListView extends JFrame {
         info.setBorder(new EmptyBorder(0, 14, 0, 0));
  
         JLabel name = new JLabel(match.getNama());
-        name.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        name.setFont(new Font("Arial Unicode MS", Font.BOLD, 14));
         name.setForeground(Color.WHITE);
  
         JLabel sub = new JLabel(match.getDomisili() + " • " + match.getUmur() + " thn");
-        sub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        sub.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         sub.setForeground(new Color(140, 140, 170));
  
-        JLabel hobi = new JLabel(match.getHobiString().length() > 30
-            ? match.getHobiString().substring(0, 30) + "..." : match.getHobiString());
-        hobi.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        JLabel hobi = new JLabel("<html><div style='width:230px;'>"
+            + match.getHobiString()
+            + "</div></html>");
+        hobi.setFont(new Font("Arial Unicode MS", Font.PLAIN, 11));
         hobi.setForeground(new Color(255, 150, 170));
  
         info.add(name);
@@ -145,7 +148,7 @@ public class ChatListView extends JFrame {
         info.add(hobi);
  
         JLabel arrow = new JLabel("›");
-        arrow.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        arrow.setFont(new Font("Arial Unicode MSe UI", Font.BOLD, 22));
         arrow.setForeground(new Color(255, 90, 130));
  
         item.add(avatar, BorderLayout.WEST);
@@ -170,7 +173,7 @@ public class ChatListView extends JFrame {
  
     private JButton makeNavButton(String text, boolean active) {
         JButton btn = new JButton(text);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btn.setFont(new Font("Arial Unicode MSe UI", Font.PLAIN, 12));
         btn.setForeground(active ? new Color(255, 90, 130) : new Color(140, 140, 170));
         btn.setBackground(new Color(24, 24, 40));
         btn.setBorderPainted(false);

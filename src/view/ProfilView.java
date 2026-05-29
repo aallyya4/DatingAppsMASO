@@ -58,17 +58,23 @@ public class ProfilView extends JFrame {
         topBar.setBackground(new Color(24, 24, 40));
         topBar.setBorder(new EmptyBorder(14, 20, 14, 20));
         JLabel title = new JLabel("👤 Profilku");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        title.setFont(new Font("Arial Unicode MS", Font.BOLD, 18));
         title.setForeground(accent);
         topBar.add(title, BorderLayout.WEST);
  
         btnLogout = new JButton("Keluar");
-        btnLogout.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        btnLogout.setForeground(new Color(255, 100, 100));
-        btnLogout.setBackground(new Color(24, 24, 40));
-        btnLogout.setBorder(new LineBorder(new Color(255, 100, 100, 80), 1, true));
+        btnLogout.setFont(new Font("Arial Unicode MS", Font.BOLD, 12));
+        btnLogout.setForeground(new Color(255, 80, 80));
+
+        btnLogout.setBorder(null);
+        btnLogout.setBorderPainted(false);
+        btnLogout.setContentAreaFilled(false);
         btnLogout.setFocusPainted(false);
+        btnLogout.setOpaque(false);
+
         btnLogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        btnLogout.setPreferredSize(new Dimension(70, 30));
         topBar.add(btnLogout, BorderLayout.EAST);
  
         // Profile avatar + username header
@@ -84,7 +90,7 @@ public class ProfilView extends JFrame {
                 g2.setColor(new Color(80, 20, 60));
                 g2.fillOval(0, 0, getWidth(), getHeight());
                 g2.dispose();
-                g.setFont(new Font("Segoe UI", Font.PLAIN, 40));
+                g.setFont(new Font("Arial Unicode MS", Font.PLAIN, 40));
                 g.setColor(Color.WHITE);
                 String icon = currentUser.getKelamin().equals("Perempuan") ? "👩" : "👨";
                 FontMetrics fm = g.getFontMetrics();
@@ -97,7 +103,7 @@ public class ProfilView extends JFrame {
         lblFoto.setAlignmentX(CENTER_ALIGNMENT);
  
         lblUsername = new JLabel("@" + currentUser.getUsername());
-        lblUsername.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblUsername.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         lblUsername.setForeground(new Color(160, 160, 190));
         lblUsername.setAlignmentX(CENTER_ALIGNMENT);
  
@@ -149,19 +155,23 @@ public class ProfilView extends JFrame {
         listHobi.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listHobi.setBackground(new Color(40, 40, 62));
         listHobi.setForeground(Color.WHITE);
-        listHobi.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        listHobi.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         listHobi.setFixedCellHeight(26);
         listHobi.setSelectionBackground(new Color(255, 90, 130, 180));
         listHobi.setSelectionForeground(Color.WHITE);
+        
         JScrollPane hs = new JScrollPane(listHobi);
         hs.setPreferredSize(new Dimension(0, 110));
         hs.setBorder(new LineBorder(new Color(80, 80, 120), 1));
+        hs.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        hs.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        hs.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         form.add(hs, c);
  
         c.gridy = row++; form.add(label("Deskripsi Diri"), c);
         c.gridy = row++;
         txtDeskripsi = new JTextArea(3, 20);
-        txtDeskripsi.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtDeskripsi.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         txtDeskripsi.setForeground(Color.WHITE);
         txtDeskripsi.setBackground(new Color(40, 40, 62));
         txtDeskripsi.setCaretColor(Color.WHITE);
@@ -172,7 +182,10 @@ public class ProfilView extends JFrame {
             new EmptyBorder(8, 12, 8, 12)
         ));
         JScrollPane ds = new JScrollPane(txtDeskripsi);
-        ds.setBorder(null); form.add(ds, c);
+        ds.setBorder(null);
+        ds.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        ds.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        form.add(ds, c);
  
         c.gridy = row++;
         c.insets = new Insets(16, 0, 4, 0);
@@ -182,7 +195,10 @@ public class ProfilView extends JFrame {
         JScrollPane scroll = new JScrollPane(form);
         scroll.setBackground(bg);
         scroll.setBorder(null);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
+        scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
  
         // Bottom nav
         JPanel navPanel = new JPanel(new GridLayout(1, 3));
@@ -237,14 +253,14 @@ public class ProfilView extends JFrame {
  
     private JLabel label(String text) {
         JLabel l = new JLabel(text);
-        l.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        l.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         l.setForeground(new Color(160, 160, 190));
         return l;
     }
  
     private JTextField field() {
         JTextField f = new JTextField();
-        f.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        f.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         f.setForeground(Color.WHITE);
         f.setBackground(new Color(40, 40, 62));
         f.setCaretColor(Color.WHITE);
@@ -256,7 +272,7 @@ public class ProfilView extends JFrame {
     }
  
     private void styleCombo(JComboBox<String> cb) {
-        cb.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cb.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         cb.setBackground(new Color(40, 40, 62));
         cb.setForeground(Color.WHITE);
     }
@@ -273,7 +289,7 @@ public class ProfilView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setFont(new Font("Arial Unicode MS", Font.BOLD, 14));
         btn.setForeground(Color.WHITE);
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
@@ -286,7 +302,7 @@ public class ProfilView extends JFrame {
  
     private JButton navBtn(String text, boolean active) {
         JButton btn = new JButton(text);
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btn.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         btn.setForeground(active ? new Color(255, 90, 130) : new Color(140, 140, 170));
         btn.setBackground(new Color(24, 24, 40));
         btn.setBorderPainted(false);
