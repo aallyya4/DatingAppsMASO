@@ -7,6 +7,8 @@ package model;
 import database.Connection;
 import java.sql.*;
 import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -151,7 +153,7 @@ public class UserModel {
     private void createMatch(int userId, int targetId) {
         int u1 = Math.min(userId, targetId);
         int u2 = Math.max(userId, targetId);
-        String sql = "INSERT OR IGNORE INTO matches (user1_id, user2_id) VALUES (?,?)";
+        String sql = "INSERT IGNORE INTO matches (user1_id, user2_id) VALUES (?,?)";
         try (PreparedStatement ps = Connection.getInstance().prepareStatement(sql)) {
             ps.setInt(1, u1);
             ps.setInt(2, u2);
@@ -197,12 +199,15 @@ public class UserModel {
             ps.setInt(3, otherId); ps.setInt(4, userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                DateTimeFormatter formatter =
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
                 list.add(new ChatMessage(
-                        rs.getInt("id"),
-                        rs.getInt("sender_id"),
-                        rs.getInt("receiver_id"),
-                        rs.getString("pesan"),
-                        java.time.LocalDateTime.parse(rs.getString("waktu"))
+                    rs.getInt("id"),
+                    rs.getInt("sender_id"),
+                    rs.getInt("receiver_id"),
+                    rs.getString("pesan"),
+                    LocalDateTime.parse(rs.getString("waktu"), formatter)
                 ));
             }
         } catch (SQLException e) { e.printStackTrace(); }
