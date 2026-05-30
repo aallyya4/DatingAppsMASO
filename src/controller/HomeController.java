@@ -59,6 +59,7 @@ public class HomeController {
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.INFORMATION_MESSAGE);
                     if (choice == JOptionPane.YES_OPTION) {
+                        view.dispose();
                         new ChatRoomView(currentUser, target).setVisible(true);
                     }
                 });
@@ -77,21 +78,33 @@ public class HomeController {
     private void openChatList() {
         List<User> matches = model.getMatches(currentUser.getId());
         view.dispose();
+
         SwingUtilities.invokeLater(() -> {
             ChatListView[] chatListRef = new ChatListView[1];
+
             chatListRef[0] = new ChatListView(currentUser, matches, (matchUser) -> {
-                chatListRef[0].dispose();
-                SwingUtilities.invokeLater(() -> new ChatRoomView(currentUser, matchUser).setVisible(true));
+                chatListRef[0].setVisible(false);
+
+                ChatRoomView room = new ChatRoomView(
+                    currentUser,
+                    matchUser,
+                    chatListRef[0]
+                );
+
+                room.setVisible(true);
             });
+
             chatListRef[0].getBtnHome().addActionListener(e -> {
                 chatListRef[0].dispose();
                 List<User> reko = model.getRekomendasi(currentUser);
                 SwingUtilities.invokeLater(() -> new HomeView(currentUser, reko).setVisible(true));
             });
+
             chatListRef[0].getBtnProfil().addActionListener(e -> {
                 chatListRef[0].dispose();
                 SwingUtilities.invokeLater(() -> new ProfilView(currentUser).setVisible(true));
             });
+
             chatListRef[0].setVisible(true);
         });
     }

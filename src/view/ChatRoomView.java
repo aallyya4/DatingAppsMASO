@@ -26,14 +26,8 @@ public class ChatRoomView extends JFrame {
     private UserModel userModel;
     private JScrollPane scrollPane;
     private ChatListView parentView;
-    private Runnable onBackToHome;  
-    private Runnable onBackToProfil;
-    
-    public ChatRoomView(
-            User currentUser,
-            User otherUser,
-            ChatListView parentView) {
 
+    public ChatRoomView(User currentUser, User otherUser, ChatListView parentView) {
         this.currentUser = currentUser;
         this.otherUser = otherUser;
         this.parentView = parentView;
@@ -42,16 +36,9 @@ public class ChatRoomView extends JFrame {
         initComponents();
         loadMessages();
     }
-    
-    public void setOnBackToHome(Runnable r) { this.onBackToHome = r; }
-    public void setOnBackToProfil(Runnable r) { this.onBackToProfil = r; }
-    
+
     public ChatRoomView(User currentUser, User otherUser) {
-        this.currentUser = currentUser;
-        this.otherUser = otherUser;
-        this.userModel = new UserModel();
-        initComponents();
-        loadMessages();
+        this(currentUser, otherUser, null);
     }
  
     private void initComponents() {
@@ -106,31 +93,41 @@ public class ChatRoomView extends JFrame {
 
         if (confirm == JOptionPane.YES_OPTION) {
             userModel.blockUser(currentUser.getId(), otherUser.getId());
-            JOptionPane.showMessageDialog(this, otherUser.getNama() + " berhasil diblokir.");
+
+            JOptionPane.showMessageDialog(
+                this,
+                otherUser.getNama() + " berhasil diblokir."
+            );
+
+            if (parentView != null) {
+                parentView.dispose();
+            }
+
             dispose();
 
-            List<User> updatedMatches = userModel.getMatches(currentUser.getId());
-            ChatListView[] ref = new ChatListView[1];
-            ref[0] = new ChatListView(currentUser, updatedMatches, user -> {
-                ref[0].setVisible(false);
-                ChatRoomView room = new ChatRoomView(currentUser, user, ref[0]);
-                // ← bind callback yang sama dari parent
-                room.setOnBackToHome(onBackToHome);
-                room.setOnBackToProfil(onBackToProfil);
-                room.setVisible(true);
+            List<User> matchesBaru = userModel.getMatches(currentUser.getId());
+
+            final ChatListView[] chatListRef = new ChatListView[1];
+
+            chatListRef[0] = new ChatListView(currentUser, matchesBaru, (matchUser) -> {
+                chatListRef[0].setVisible(false);
+                new ChatRoomView(currentUser, matchUser, chatListRef[0]).setVisible(true);
             });
 
-            // ← pakai callback, bukan hardcode navigate
-            ref[0].getBtnHome().addActionListener(ev -> {
-                ref[0].setVisible(false);
-                if (onBackToHome != null) onBackToHome.run();
-            });
-            ref[0].getBtnProfil().addActionListener(ev -> {
-                ref[0].setVisible(false);
-                if (onBackToProfil != null) onBackToProfil.run();
+            chatListRef[0].getBtnHome().addActionListener(ev -> {
+                chatListRef[0].dispose();
+
+                List<User> reko = userModel.getRekomendasi(currentUser);
+                new HomeView(currentUser, reko).setVisible(true);
             });
 
-            ref[0].setVisible(true);
+            chatListRef[0].getBtnProfil().addActionListener(ev -> {
+                chatListRef[0].dispose();
+
+                new ProfilView(currentUser).setVisible(true);
+            });
+
+            chatListRef[0].setVisible(true);
         }
     });
  
@@ -316,3 +313,5 @@ public class ChatRoomView extends JFrame {
         return wrapper;
     }
 }
+
+
