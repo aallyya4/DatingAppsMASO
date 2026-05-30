@@ -166,7 +166,7 @@ public class ChatRoomView extends JFrame {
                 super.paintComponent(g);
             }
         };
-        btnKirim.setFont(new Font("Arial Unicode MS", Font.BOLD, 16));
+        btnKirim.setFont(new Font("Segoe UI", Font.BOLD, 16));
         btnKirim.setForeground(Color.WHITE);
         btnKirim.setOpaque(false);
         btnKirim.setContentAreaFilled(false);
@@ -231,6 +231,7 @@ public class ChatRoomView extends JFrame {
         ));
         wrapper.setBackground(new Color(18, 18, 30));
         wrapper.setBorder(new EmptyBorder(2, 12, 2, 12));
+        wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, 9999));
 
         JPanel bubble = new JPanel() {
             @Override protected void paintComponent(Graphics g) {
@@ -242,39 +243,42 @@ public class ChatRoomView extends JFrame {
                 super.paintComponent(g);
             }
         };
-
-        bubble.setLayout(new BorderLayout());
+        bubble.setLayout(new BoxLayout(bubble, BoxLayout.Y_AXIS));
         bubble.setOpaque(false);
         bubble.setBorder(new EmptyBorder(10, 14, 8, 14));
 
-        JLabel txtLabel = new JLabel(text);
+        // Teks — wrap kalau panjang, natural kalau pendek
+        String htmlText = text.length() > 30 
+            ? "<html><p style='width:180px'>" + text + "</p></html>" 
+            : text;
+        JLabel txtLabel = new JLabel(htmlText);
         txtLabel.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
         txtLabel.setForeground(Color.WHITE);
+        txtLabel.setMaximumSize(new Dimension(200, 9999));
 
+        // Jam di kanan bawah
         JLabel timeLabel = new JLabel(time);
         timeLabel.setFont(new Font("Arial Unicode MS", Font.PLAIN, 10));
         timeLabel.setForeground(new Color(255, 255, 255, 150));
+        timeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        timeLabel.setAlignmentX(RIGHT_ALIGNMENT);
+        timeLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 15));
+        
+        bubble.setLayout(new BorderLayout());
 
-        JPanel content = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
-        content.setOpaque(false);
-        content.add(txtLabel);
-        content.add(timeLabel);
+        // teks di tengah
+        txtLabel.setVerticalAlignment(SwingConstants.TOP);
+        bubble.add(txtLabel, BorderLayout.CENTER);
 
-        bubble.add(content, BorderLayout.CENTER);
+        // jam di kanan bawah
+        timeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        bubble.add(timeLabel, BorderLayout.SOUTH);
 
-        int textWidth = txtLabel.getPreferredSize().width;
-        int timeWidth = timeLabel.getPreferredSize().width;
-
-        int bubbleWidth = Math.min(textWidth + timeWidth + 55, 280);
-        int bubbleHeight = content.getPreferredSize().height + 22;
-
-        bubble.setPreferredSize(new Dimension(bubbleWidth, bubbleHeight));
-
-        bubble.setPreferredSize(new Dimension(bubbleWidth, bubbleHeight));
+        // Ukuran bubble menyesuaikan konten
+        bubble.setMaximumSize(new Dimension(240, 9999));
 
         wrapper.add(bubble);
-        wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, wrapper.getPreferredSize().height));
-
+        wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, wrapper.getPreferredSize().height + 5)); // ← tambah ini
         return wrapper;
     }
 }
