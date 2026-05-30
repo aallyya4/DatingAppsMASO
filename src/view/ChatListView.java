@@ -27,7 +27,7 @@ public class ChatListView extends JFrame {
  
     private void initComponents(List<User> matches, Consumer<User> onChatSelected) {
         setTitle("MASO - Chat");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(420, 720);
         setLocationRelativeTo(null);
         setResizable(false);

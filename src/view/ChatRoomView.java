@@ -25,7 +25,27 @@ public class ChatRoomView extends JFrame {
     private User otherUser;
     private UserModel userModel;
     private JScrollPane scrollPane;
- 
+    private ChatListView parentView;
+    private Runnable onBackToHome;  
+    private Runnable onBackToProfil;
+    
+    public ChatRoomView(
+            User currentUser,
+            User otherUser,
+            ChatListView parentView) {
+
+        this.currentUser = currentUser;
+        this.otherUser = otherUser;
+        this.parentView = parentView;
+        this.userModel = new UserModel();
+
+        initComponents();
+        loadMessages();
+    }
+    
+    public void setOnBackToHome(Runnable r) { this.onBackToHome = r; }
+    public void setOnBackToProfil(Runnable r) { this.onBackToProfil = r; }
+    
     public ChatRoomView(User currentUser, User otherUser) {
         this.currentUser = currentUser;
         this.otherUser = otherUser;
@@ -61,7 +81,12 @@ public class ChatRoomView extends JFrame {
         btnBack.setFocusPainted(false);
         btnBack.setContentAreaFilled(false);
         btnBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnBack.addActionListener(e -> dispose());
+        btnBack.addActionListener(e -> {
+            if (parentView != null) {
+                parentView.setVisible(true); // tampilkan ChatList lagi
+            }
+            dispose(); // tutup ChatRoom saja
+        });
         
         JButton btnBlock = new JButton("Block");
         btnBlock.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
@@ -80,23 +105,32 @@ public class ChatRoomView extends JFrame {
         );
 
         if (confirm == JOptionPane.YES_OPTION) {
-            userModel.blockUser(
-                currentUser.getId(),
-                otherUser.getId()
-            );
-
-            JOptionPane.showMessageDialog(
-                this,
-                otherUser.getNama() + " berhasil diblokir."
-            );
-
+            userModel.blockUser(currentUser.getId(), otherUser.getId());
+            JOptionPane.showMessageDialog(this, otherUser.getNama() + " berhasil diblokir.");
             dispose();
-            
-            new ChatListView(
-                currentUser,
-                userModel.getMatches(currentUser.getId()),
-                user -> new ChatRoomView(currentUser, user).setVisible(true)
-            ).setVisible(true);
+
+            List<User> updatedMatches = userModel.getMatches(currentUser.getId());
+            ChatListView[] ref = new ChatListView[1];
+            ref[0] = new ChatListView(currentUser, updatedMatches, user -> {
+                ref[0].setVisible(false);
+                ChatRoomView room = new ChatRoomView(currentUser, user, ref[0]);
+                // ← bind callback yang sama dari parent
+                room.setOnBackToHome(onBackToHome);
+                room.setOnBackToProfil(onBackToProfil);
+                room.setVisible(true);
+            });
+
+            // ← pakai callback, bukan hardcode navigate
+            ref[0].getBtnHome().addActionListener(ev -> {
+                ref[0].setVisible(false);
+                if (onBackToHome != null) onBackToHome.run();
+            });
+            ref[0].getBtnProfil().addActionListener(ev -> {
+                ref[0].setVisible(false);
+                if (onBackToProfil != null) onBackToProfil.run();
+            });
+
+            ref[0].setVisible(true);
         }
     });
  

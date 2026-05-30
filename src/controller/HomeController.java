@@ -78,20 +78,21 @@ public class HomeController {
         List<User> matches = model.getMatches(currentUser.getId());
         view.dispose();
         SwingUtilities.invokeLater(() -> {
-            ChatListView chatList = new ChatListView(currentUser, matches, (matchUser) -> {
-                // open chat room
-                new ChatRoomView(currentUser, matchUser).setVisible(true);
+            ChatListView[] chatListRef = new ChatListView[1];
+            chatListRef[0] = new ChatListView(currentUser, matches, (matchUser) -> {
+                chatListRef[0].dispose();
+                SwingUtilities.invokeLater(() -> new ChatRoomView(currentUser, matchUser).setVisible(true));
             });
-            chatList.getBtnHome().addActionListener(e -> {
-                chatList.dispose();
+            chatListRef[0].getBtnHome().addActionListener(e -> {
+                chatListRef[0].dispose();
                 List<User> reko = model.getRekomendasi(currentUser);
                 SwingUtilities.invokeLater(() -> new HomeView(currentUser, reko).setVisible(true));
             });
-            chatList.getBtnProfil().addActionListener(e -> {
-                chatList.dispose();
+            chatListRef[0].getBtnProfil().addActionListener(e -> {
+                chatListRef[0].dispose();
                 SwingUtilities.invokeLater(() -> new ProfilView(currentUser).setVisible(true));
             });
-            chatList.setVisible(true);
+            chatListRef[0].setVisible(true);
         });
     }
  
