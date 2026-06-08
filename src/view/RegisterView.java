@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author anin7
  */
-public class RegisterView extends JFrame {
+public class RegisterView extends BaseView {
     private JTextField txtNama, txtUsername, txtDomisili, txtUmur, txtNoTelepon, txtDeskripsi;
     private JPasswordField txtPassword, txtConfirmPass;
     private JComboBox<String> cmbKelamin, cmbTujuan;
@@ -31,16 +31,12 @@ public class RegisterView extends JFrame {
     };
  
     public RegisterView() {
+        super("MASO - Daftar Akun");
         initComponents();
     }
- 
-    private void initComponents() {
-        setTitle("MASO - Daftar Akun Baru");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(520, 700);
-        setLocationRelativeTo(null);
-        setResizable(false);
- 
+    
+    @Override
+    protected void initComponents() {
         Color bg = new Color(18, 18, 30);
         Color cardBg = new Color(28, 28, 45);
         Color accent = new Color(255, 90, 130);
@@ -199,19 +195,6 @@ public class RegisterView extends JFrame {
         l.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         l.setForeground(color);
         return l;
-    }
- 
-    private JTextField makeTextField() {
-        JTextField f = new JTextField();
-        f.setFont(new Font("Arial Unicode MS", Font.PLAIN, 14));
-        f.setForeground(Color.WHITE);
-        f.setBackground(new Color(40, 40, 62));
-        f.setCaretColor(Color.WHITE);
-        f.setBorder(new CompoundBorder(
-            new LineBorder(new Color(80, 80, 120), 1, true),
-            new EmptyBorder(9, 12, 9, 12)
-        ));
-        return f;
     }
  
     private JPasswordField makePassField() {

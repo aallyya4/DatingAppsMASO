@@ -37,7 +37,7 @@ public class HomeController {
  
         view.getBtnChat().addActionListener(e -> openChatList());
         view.getBtnProfil().addActionListener(e -> openProfil());
-        view.getBtnHome().addActionListener(e -> { /* already here */ });
+        view.getBtnHome().addActionListener(e -> {  });
     }
  
     private void handleSwipe(boolean interest) {
@@ -60,7 +60,29 @@ public class HomeController {
                         JOptionPane.INFORMATION_MESSAGE);
                     if (choice == JOptionPane.YES_OPTION) {
                         view.dispose();
-                        new ChatRoomView(currentUser, target).setVisible(true);
+
+                        List<User> matchesBaru = model.getMatches(currentUser.getId());
+
+                        final ChatListView[] chatListRef = new ChatListView[1];
+
+                        chatListRef[0] = new ChatListView(currentUser, matches, (matchUser) -> {
+                            chatListRef[0].setVisible(false);
+                            new ChatRoomView(currentUser, matchUser, chatListRef[0]).setVisible(true);
+                        });
+
+                        chatListRef[0].getBtnHome().addActionListener(ev -> {
+                            chatListRef[0].dispose();
+                            List<User> reko = model.getRekomendasi(currentUser);
+                            new HomeView(currentUser, reko).setVisible(true);
+                        });
+
+                        chatListRef[0].getBtnProfil().addActionListener(ev -> {
+                            chatListRef[0].dispose();
+                            new ProfilView(currentUser).setVisible(true);
+                        });
+
+                        chatListRef[0].setVisible(false);
+                        new ChatRoomView(currentUser, target, chatListRef[0]).setVisible(true);
                     }
                 });
             }

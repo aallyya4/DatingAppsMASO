@@ -15,22 +15,22 @@ import java.util.function.Consumer;
  *
  * @author anin7
  */
-public class ChatListView extends JFrame {
+public class ChatListView extends BaseView {
     private JButton btnHome, btnChat, btnProfil;
     private JPanel listPanel;
     private User currentUser;
  
     public ChatListView(User currentUser, List<User> matches, Consumer<User> onChatSelected) {
+        super("MASO - Chat");
         this.currentUser = currentUser;
         initComponents(matches, onChatSelected);
     }
- 
+    
+    @Override
+    protected void initComponents() {
+    }
+    
     private void initComponents(List<User> matches, Consumer<User> onChatSelected) {
-        setTitle("MASO - Chat");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(420, 720);
-        setLocationRelativeTo(null);
-        setResizable(false);
  
         Color bg = new Color(18, 18, 30);
         Color accent = new Color(255, 90, 130);
@@ -169,18 +169,6 @@ public class ChatListView extends JFrame {
         sep.setForeground(new Color(40, 40, 65));
         sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
         return sep;
-    }
- 
-    private JButton makeNavButton(String text, boolean active) {
-        JButton btn = new JButton(text);
-        btn.setFont(new Font("Arial Unicode MSe UI", Font.PLAIN, 12));
-        btn.setForeground(active ? new Color(255, 90, 130) : new Color(140, 140, 170));
-        btn.setBackground(new Color(24, 24, 40));
-        btn.setBorderPainted(false);
-        btn.setFocusPainted(false);
-        btn.setContentAreaFilled(false);
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        return btn;
     }
  
     public JButton getBtnHome() { return btnHome; }

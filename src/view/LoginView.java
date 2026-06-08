@@ -14,7 +14,7 @@ import java.awt.event.*;
  *
  * @author anin7
  */
-public class LoginView extends JFrame {
+public class LoginView extends BaseView {
     private JTextField txtUsername;
     private JPasswordField txtPassword;
     private JButton btnLogin;
@@ -22,16 +22,12 @@ public class LoginView extends JFrame {
     private JLabel lblError;
  
     public LoginView() {
+        super("MASO - Match Soulmate Online");
         initComponents();
     }
- 
-    private void initComponents() {
-        setTitle("MASO - Match Soulmate Online");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(420, 720);
-        setLocationRelativeTo(null);
-        setResizable(false);
- 
+    
+    @Override
+    protected void initComponents() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(18, 18, 30));
  

@@ -30,7 +30,6 @@ public class LoginController {
         view.getBtnLogin().addActionListener(e -> handleLogin());
         view.getBtnRegister().addActionListener(e -> goToRegister());
  
-        // Enter key on password field
         view.getTxtPassword().addActionListener(e -> handleLogin());
     }
  

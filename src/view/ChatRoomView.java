@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author anin7
  */
-public class ChatRoomView extends JFrame {
+public class ChatRoomView extends BaseView {
     private JPanel messagesPanel;
     private JTextField txtPesan;
     private JButton btnKirim, btnBack;
@@ -28,6 +28,7 @@ public class ChatRoomView extends JFrame {
     private ChatListView parentView;
 
     public ChatRoomView(User currentUser, User otherUser, ChatListView parentView) {
+        super("MASO - Chat dengan " + otherUser.getNama());
         this.currentUser = currentUser;
         this.otherUser = otherUser;
         this.parentView = parentView;
@@ -40,14 +41,9 @@ public class ChatRoomView extends JFrame {
     public ChatRoomView(User currentUser, User otherUser) {
         this(currentUser, otherUser, null);
     }
- 
-    private void initComponents() {
-        setTitle("MASO - Chat dengan " + otherUser.getNama());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(420, 720);
-        setLocationRelativeTo(null);
-        setResizable(false);
- 
+    
+    @Override
+    protected void initComponents() {
         Color bg = new Color(18, 18, 30);
         Color accent = new Color(255, 90, 130);
         Color topBg = new Color(24, 24, 40);

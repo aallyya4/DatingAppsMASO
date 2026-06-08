@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author anin7
  */
-public class ProfilView extends JFrame {
+public class ProfilView extends BaseView {
     private JTextField txtNama, txtDomisili, txtUmur, txtNoTelepon;
     private JTextArea txtDeskripsi;
     private JComboBox<String> cmbKelamin, cmbTujuan;
@@ -34,18 +34,14 @@ public class ProfilView extends JFrame {
     };
  
     public ProfilView(User user) {
+        super("MASO - Profil");
         this.currentUser = user;
         initComponents();
         populateData();
     }
- 
-    private void initComponents() {
-        setTitle("MASO - Profilku");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(420, 720);
-        setLocationRelativeTo(null);
-        setResizable(false);
- 
+    
+    @Override
+    protected void initComponents() {
         Color bg = new Color(18, 18, 30);
         Color cardBg = new Color(28, 28, 45);
         Color accent = new Color(255, 90, 130);

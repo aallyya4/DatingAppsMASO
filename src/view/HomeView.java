@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author anin7
  */
-public class HomeView extends JFrame {
+public class HomeView extends BaseView {
     private JPanel cardPanel;
     private JButton btnInterest, btnNotInterest;
     private JLabel lblNama, lblUsia, lblDomisili, lblKelamin, lblTujuan, lblHobi, lblDeskripsi;
@@ -26,19 +26,16 @@ public class HomeView extends JFrame {
     private User currentUser;
  
     public HomeView(User currentUser, List<User> rekomendasi) {
+        super("MASO - Home");
         this.currentUser = currentUser;
         this.rekomendasi = rekomendasi;
         initComponents();
         if (!rekomendasi.isEmpty()) showCard(rekomendasi.get(0));
         else showNoProfile();
     }
- 
-    private void initComponents() {
-        setTitle("MASO - Home");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(420, 720);
-        setLocationRelativeTo(null);
-        setResizable(false);
+    
+    @Override
+    protected void initComponents() {
  
         Color bg = new Color(18, 18, 30);
         Color accent = new Color(255, 90, 130);
@@ -244,18 +241,6 @@ public class HomeView extends JFrame {
         btn.setFocusPainted(false);
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btn.setPreferredSize(new Dimension(0, 48));
-        return btn;
-    }
- 
-    private JButton makeNavButton(String text, boolean active) {
-        JButton btn = new JButton(text);
-        btn.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
-        btn.setForeground(active ? new Color(255, 90, 130) : new Color(140, 140, 170));
-        btn.setBackground(new Color(24, 24, 40));
-        btn.setBorderPainted(false);
-        btn.setFocusPainted(false);
-        btn.setContentAreaFilled(false);
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         return btn;
     }
  
