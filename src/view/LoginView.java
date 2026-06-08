@@ -22,7 +22,7 @@ public class LoginView extends BaseView {
     private JLabel lblError;
  
     public LoginView() {
-        super("MASO - Match Soulmate Online");
+        super("MASO - Meet And Socialize Online");
         initComponents();
     }
     
@@ -41,7 +41,7 @@ public class LoginView extends BaseView {
         lblLogo.setForeground(new Color(255, 90, 130));
         lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
  
-        JLabel lblTagline = new JLabel("Match Soulmate Online");
+        JLabel lblTagline = new JLabel("Meet And Socialize Online");
         lblTagline.setFont(new Font("Arial Unicode MS", Font.PLAIN, 13));
         lblTagline.setForeground(new Color(160, 160, 190));
         lblTagline.setHorizontalAlignment(SwingConstants.CENTER);
@@ -66,7 +66,7 @@ public class LoginView extends BaseView {
         lblTitle.setForeground(Color.WHITE);
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
  
-        JLabel lblSub = new JLabel("Temukan pasangan jiwa kamu");
+        JLabel lblSub = new JLabel("Temukan teman baru kamu!");
         lblSub.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
         lblSub.setForeground(new Color(140, 140, 170));
         lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
